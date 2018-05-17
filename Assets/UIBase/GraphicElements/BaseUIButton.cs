@@ -1,40 +1,36 @@
-﻿using UnityEngine;
+﻿using Assets.UIBase.GraphicElements.BaseClasses;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// A button with a shadow underneath
 /// </summary>
-[RequireComponent(typeof(Button))]
-[RequireComponent(typeof(Image))]
-public class BaseUIButton : ModularUI {
-
-    Image buttonImage;
-    Button button;
-    RectTransform buttonRectTransform;
-
+public class BaseUIButton : InteractableGraphic
+{
     [SerializeField] ButtonColor buttonColor;
     [SerializeField] ButtonSize buttonSize;
 
     protected override void OnSkinUI()
     {
-        base.OnSkinUI();
-        Navigation navigationDisabler = new Navigation
-        {
-            mode = Navigation.Mode.None
-        };
+        base.OnSkinUI();   
+    }
 
-        buttonImage = GetComponent<Image>();
-        button = GetComponent<Button>();
-        buttonRectTransform = GetComponent<RectTransform>();
+    protected override void SetupButton()
+    {
+        base.SetupButton();
 
-        buttonImage.type = Image.Type.Sliced;
+        SetCorrectButtonSkin();
+        SetButtonDimensions();
+    }
 
-        button.transition = Selectable.Transition.SpriteSwap;
-        button.targetGraphic = buttonImage;
-        button.navigation = navigationDisabler;
+    private void SetButtonDimensions()
+    {
         buttonRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, buttonSize.XDimension);
         buttonRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, buttonSize.YDimension);
+    }
 
+    private void SetCorrectButtonSkin()
+    {
         switch (buttonColor)
         {
             case ButtonColor.Main:
@@ -46,7 +42,6 @@ public class BaseUIButton : ModularUI {
                 button.spriteState = skinData.AlternateSpriteState;
                 break;
         }
-        
     }
 
     public enum ButtonColor

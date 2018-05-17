@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinData: {fileID: 11400000, guid: a1a95c5ac6665874eba866b1246f61d9, type: 2}
+  refreshInEditor: 1
+  buttonSize: {fileID: 11400000, guid: edfa5124dd2816f47a8247df975f70ec, type: 2}
 --- !u!222 &222050647809250094
 CanvasRenderer:
   m_ObjectHideFlags: 1

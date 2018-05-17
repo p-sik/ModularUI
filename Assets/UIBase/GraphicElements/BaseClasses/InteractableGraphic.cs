@@ -36,15 +36,12 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
         {
             button.transition = Selectable.Transition.SpriteSwap;
             button.targetGraphic = buttonImage;
-            button.spriteState = skinData.FloatingButtonSpriteState;         
-
             buttonRectTransform.pivot = Vector2.one * 0.5f;
         }
 
-        protected void SetupButtonImage()
+        protected virtual void SetupButtonImage()
         {
-            buttonImage.type = Image.Type.Sliced;
-            buttonImage.sprite = skinData.FloatingButtonSprite;
+            buttonImage.type = Image.Type.Sliced;            
         }
 
         protected void DisableAutomaticNavigation()

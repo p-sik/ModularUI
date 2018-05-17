@@ -9,42 +9,49 @@ using UnityEngine.UI;
 /// </summary>
 public class FloatingUIButton : InteractableGraphic
 {
-    const float PRESSED_SIZE = 400f;
-    const float NORMAL_SIZE = 160f;
+    [SerializeField] FloatingActionButtonSize buttonSize;
 
     bool isPressed = false;
 
     protected override void SetupButton()
     {
         base.SetupButton();
+
+        ScaleElements(buttonRectTransform, buttonSize.NormalSize);
+        button.spriteState = skinData.FloatingButtonSpriteState;
         button.onClick.AddListener(ChangeSize);
+    }
+
+    protected override void SetupButtonImage()
+    {
+        base.SetupButtonImage();
+        buttonImage.sprite = skinData.FloatingButtonSprite;
     }
 
     private void ChangeSize()
     {
         if (!isPressed)
         {
-            StartCoroutine(AnimateScaling(PRESSED_SIZE, true));
+            StartCoroutine(AnimateScaling(buttonSize.PressedSize, true));
             isPressed = true;
         }
         else
         {
-            StartCoroutine(AnimateScaling(NORMAL_SIZE, false));
+            StartCoroutine(AnimateScaling(buttonSize.NormalSize, false));
             isPressed = false;
         }
     }
 
     private IEnumerator AnimateScaling(float maxScale, bool scalingUp)
     {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        float currScale = rectTransform.rect.width;
+        float currScale = buttonRectTransform.rect.width;
 
         if (scalingUp)
         {
             while (currScale < maxScale)
             {
                 currScale += 20;
-                ScaleElements(rectTransform, currScale);
+                ScaleElements(buttonRectTransform, currScale);
                 yield return new WaitForFixedUpdate();                
             }
         }
@@ -53,16 +60,16 @@ public class FloatingUIButton : InteractableGraphic
             while (currScale > maxScale)
             {
                 currScale -= 20;
-                ScaleElements(rectTransform, currScale);
+                ScaleElements(buttonRectTransform, currScale);
                 yield return new WaitForFixedUpdate();                
             }
         }
     }
 
-    private void ScaleElements(RectTransform rectTransform, float scale)
+    private void ScaleElements(RectTransform rt, float scale)
     {
-        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, scale);
-        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, scale);
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, scale);
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, scale);
     }
 
 }
