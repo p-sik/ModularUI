@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e48e288c73aa23847a0827da463347e7, type: 3}
-  m_Name: NormalFAB
+  m_Script: {fileID: 11500000, guid: e8adb32ca7285524a8749745a7b3d298, type: 3}
+  m_Name: StandardPanel
   m_EditorClassIdentifier: 
-  pressedSize: 400
-  normalSize: 200
+  xDimension: 560
+  yDimension: 480

@@ -13,6 +13,11 @@ public class FloatingUIButton : InteractableGraphic
 
     bool isPressed = false;
 
+    protected override void OnSkinUI()
+    {
+        base.OnSkinUI();
+    }
+
     protected override void SetupButton()
     {
         base.SetupButton();

@@ -4086,7 +4086,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -26, y: 642}
-  m_SizeDelta: {x: 180, y: 180}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1723909824
 MonoBehaviour:
@@ -4100,7 +4100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinData: {fileID: 11400000, guid: a1a95c5ac6665874eba866b1246f61d9, type: 2}
-  refreshInEditor: 1
+  refreshInEditor: 0
   buttonSize: {fileID: 11400000, guid: edfa5124dd2816f47a8247df975f70ec, type: 2}
 --- !u!114 &1723909825
 MonoBehaviour:

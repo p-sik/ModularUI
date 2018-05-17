@@ -19,4 +19,8 @@ public class ModularUIData : ScriptableObject {
     public Sprite MainElement;
     public Sprite MainElementWithShadow;
 
+    [Header("Moving panel")]
+    public Sprite PanelBackground;
+    public Sprite ContrastPanelBackground;
+
 }
