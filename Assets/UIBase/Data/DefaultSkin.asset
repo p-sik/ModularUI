@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffff99469a6270f41b1535c42550eb19, type: 3}
+  m_Name: DefaultSkin
+  m_EditorClassIdentifier: 
+  ButtonSprite: {fileID: 21300000, guid: 0c16c150f524d0c42af34d76781fa8db, type: 3}
+  ButtonSpriteState:
+    m_HighlightedSprite: {fileID: 21300000, guid: 457b339bfde95e344a5aa25ab0a94f87,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 3b1825146b630f842b8dae767d7a9d6b, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 1dccb231877e69b45a7c88b5a15bd499, type: 3}
+  AlternateSprite: {fileID: 21300000, guid: 0fe694e1b057ca14fae94aefeeeadeb6, type: 3}
+  AlternateSpriteState:
+    m_HighlightedSprite: {fileID: 21300000, guid: 10f398739967793409294e8a235f05ba,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 8e0fe3695eaa0f04ea73fac59bbac3f3, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 91fd49d4a44433447a6907c765e215e4, type: 3}
+  FloatingButtonSprite: {fileID: 21300000, guid: 0c4503bfb8830e7458326941a8d6ef6c,
+    type: 3}
+  FloatingButtonSpriteState:
+    m_HighlightedSprite: {fileID: 21300000, guid: 01a5c0fbb84030942a80ec3fc8bbf80f,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: f5d9b1180ff108842ae216f66efc3dc4, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: e2167cfe23f95724590aa38b73b78925, type: 3}
+  MainElement: {fileID: 21300000, guid: 33bcebdc4bde37441b3eba56120d41a6, type: 3}
+  MainElementWithShadow: {fileID: 21300000, guid: dd41d47190121da41b8c4214fa6f0363,
+    type: 3}
