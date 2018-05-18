@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 /// <summary>
-/// Base element with only a static sprite (headers, footers, panels)
+/// Base element with only a static sprite (headers, footers)
 /// </summary>
 [RequireComponent(typeof(Image))]
 public class BaseUIElement : ModularUI {

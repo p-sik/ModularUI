@@ -22,7 +22,7 @@ public class FloatingUIButton : InteractableGraphic
     {
         base.SetupButton();
 
-        ScaleElements(buttonRectTransform, buttonSize.NormalSize);
+        ScaleElements(buttonSize.NormalSize);
         button.spriteState = skinData.FloatingButtonSpriteState;
         button.onClick.AddListener(ChangeSize);
     }
@@ -56,7 +56,7 @@ public class FloatingUIButton : InteractableGraphic
             while (currScale < maxScale)
             {
                 currScale += 20;
-                ScaleElements(buttonRectTransform, currScale);
+                ScaleElements(currScale);
                 yield return new WaitForFixedUpdate();                
             }
         }
@@ -65,16 +65,16 @@ public class FloatingUIButton : InteractableGraphic
             while (currScale > maxScale)
             {
                 currScale -= 20;
-                ScaleElements(buttonRectTransform, currScale);
+                ScaleElements(currScale);
                 yield return new WaitForFixedUpdate();                
             }
         }
     }
 
-    private void ScaleElements(RectTransform rt, float scale)
+    private void ScaleElements(float scale)
     {
-        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, scale);
-        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, scale);
+        buttonRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, scale);
+        buttonRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, scale);
     }
 
 }

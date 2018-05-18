@@ -10,20 +10,33 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
     [RequireComponent(typeof(Image))]
     public class ModularPanel : ModularUI
     {
-        Image panelBackground;
+        protected Image panelBackground;
+        protected RectTransform panelRectTransform;
 
-        [SerializeField] PanelColor color;
-        [SerializeField] PanelSize panelDimensions;
+        [SerializeField] protected PanelColor color;
+        [SerializeField] protected PanelSize panelDimensions;
+
+        public override void Update()
+        {
+            base.Update();
+        }
 
         protected override void OnSkinUI()
         {
             base.OnSkinUI();
 
-            panelBackground = GetComponent<Image>();
-            SetCorrectPanelColor();
+            RetreiveComponents();
+            SetPanelColor();
+            SetPanelDimensions();
         }
 
-        private void SetCorrectPanelColor()
+        protected virtual void RetreiveComponents()
+        {
+            panelBackground = GetComponent<Image>();
+            panelRectTransform = GetComponent<RectTransform>();
+        }
+
+        private void SetPanelColor()
         {
             switch (color)
             {
@@ -34,6 +47,15 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
                     panelBackground.sprite = skinData.ContrastPanelBackground;
                     break;
             }
+        }
+
+        protected virtual void SetPanelDimensions()
+        {
+            float xScale = panelDimensions.XDimension;
+            float yScale = panelDimensions.YDimension;
+
+            panelRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, xScale);
+            panelRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, yScale);
         }
 
         public enum PanelColor

@@ -9,6 +9,9 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
 {
     public interface IMovablePanel
     {
+        Vector2 SetInitialPosition();
+        Vector2 SetFinalPosition();
+
         void Appear();
         void Disappear();
     }
