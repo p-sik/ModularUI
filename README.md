@@ -1,4 +1,7 @@
 # Modular UI setup project
 
 ## TO DO
-- anything
+- finish all app drawers
+ - smaller "pop-up" panel
+- animated menu items
+ - radial
