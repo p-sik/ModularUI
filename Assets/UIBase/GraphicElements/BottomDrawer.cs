@@ -7,17 +7,34 @@ public class BottomDrawer : ModularPanel, IMovablePanel
 {
     private const int movementRate = 40;
     bool isDrawerExtended = false;
-    Vector2 initialPosition;
-    Vector2 finalPosition;
+    public Vector2 InitialPosition
+    {
+        get
+        {
+            float initialPosY = -panelDimensions.YDimension;
+            Vector2 initPositionVector = Vector2.zero;
+            initPositionVector.y = initialPosY;
+
+            return initPositionVector;
+        }
+        set { }
+    }
+
+    public Vector2 FinalPosition
+    {
+        get
+        {
+            return Vector2.zero;
+        }
+        set { }
+    }
 
     protected override void OnSkinUI()
     {
         base.OnSkinUI();
         refreshInEditor = false;
-        finalPosition = SetFinalPosition();
-        initialPosition = SetInitialPosition();
 
-        panelRectTransform.anchoredPosition = initialPosition;
+        panelRectTransform.anchoredPosition = InitialPosition;
     }
 
     public void ShowOrHideDrawer()
@@ -53,7 +70,7 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         //IMPROVE refactor to not repeat itself
         if (shouldAppear)
         {
-            while (verticalPanelPosition < finalPosition.y)
+            while (verticalPanelPosition < FinalPosition.y)
             {
                 verticalPanelPosition += movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
@@ -63,7 +80,7 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         }
         else
         {
-            while (verticalPanelPosition > initialPosition.y)
+            while (verticalPanelPosition > InitialPosition.y)
             {
                 verticalPanelPosition -= movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
@@ -71,19 +88,5 @@ public class BottomDrawer : ModularPanel, IMovablePanel
                 yield return new WaitForEndOfFrame();
             }
         }
-    }
-
-    public Vector2 SetInitialPosition()
-    {
-        float initialPosY = -panelDimensions.YDimension;
-        Vector2 initPositionVector = Vector2.zero;
-        initPositionVector.y = initialPosY;
-
-        return initPositionVector;        
-    }
-
-    public Vector2 SetFinalPosition()
-    {
-        return Vector2.zero;
     }
 }

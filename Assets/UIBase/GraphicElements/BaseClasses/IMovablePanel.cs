@@ -9,8 +9,8 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
 {
     public interface IMovablePanel
     {
-        Vector2 SetInitialPosition();
-        Vector2 SetFinalPosition();
+        Vector2 InitialPosition { get; set; }
+        Vector2 FinalPosition { get; set; }
 
         void ShowOrHideDrawer();
         void Appear();

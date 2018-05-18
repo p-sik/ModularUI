@@ -7,17 +7,35 @@ public class SideDrawer : ModularPanel, IMovablePanel
 {
     private const int movementRate = 20;
     private bool isDrawerExtended = false;
-    Vector2 initialPosition;
-    Vector2 finalPosition;
+
+    public Vector2 InitialPosition
+    {
+        get
+        {
+            float initialPosX = -panelDimensions.XDimension;
+            Vector2 initPositionVector = Vector2.zero;
+            initPositionVector.x = initialPosX;
+
+            return initPositionVector;
+        }
+        set { }
+    }
+
+    public Vector2 FinalPosition
+    {
+        get
+        {
+            return Vector2.zero;
+        }
+        set { }
+    }
 
     protected override void OnSkinUI()
     {
         base.OnSkinUI();
         refreshInEditor = false;
-        finalPosition = SetFinalPosition();
-        initialPosition = SetInitialPosition();
 
-        panelRectTransform.anchoredPosition = initialPosition;
+        panelRectTransform.anchoredPosition = InitialPosition;
     }
 
     public void ShowOrHideDrawer()
@@ -44,11 +62,6 @@ public class SideDrawer : ModularPanel, IMovablePanel
         StartCoroutine(DisplayDrawer(false));
     }
 
-    public Vector2 SetFinalPosition()
-    {
-        return Vector2.zero;
-    }
-
     private IEnumerator DisplayDrawer(bool shouldAppear)
     {
         float verticalPanelPosition = panelRectTransform.position.y;
@@ -56,7 +69,7 @@ public class SideDrawer : ModularPanel, IMovablePanel
 
         if (shouldAppear)
         {
-            while (horizontalPanelPosition < finalPosition.x)
+            while (horizontalPanelPosition < FinalPosition.x)
             {
                 horizontalPanelPosition += movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
@@ -66,7 +79,7 @@ public class SideDrawer : ModularPanel, IMovablePanel
         }
         else
         {
-            while (horizontalPanelPosition > initialPosition.x)
+            while (horizontalPanelPosition > InitialPosition.x)
             {
                 horizontalPanelPosition -= movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
@@ -74,14 +87,5 @@ public class SideDrawer : ModularPanel, IMovablePanel
                 yield return new WaitForEndOfFrame();
             }
         }
-    }
-
-    public Vector2 SetInitialPosition()
-    {
-        float initialPosX = -panelDimensions.XDimension;
-        Vector2 initPositionVector = Vector2.zero;
-        initPositionVector.x = initialPosX;
-
-        return initPositionVector;
     }
 }
