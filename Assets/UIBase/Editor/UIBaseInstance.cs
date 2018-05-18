@@ -15,6 +15,12 @@ public class UIBaseInstance : Editor {
     {
         Create("FloatingButton");
     }
+
+    [MenuItem("GameObject/Modular UI/Bottom Drawer", priority = 0)]
+    public static void AddBottomDrawer()
+    {
+        Create("BottomDrawer");
+    }
     #endregion
 
     static GameObject clickedObject;

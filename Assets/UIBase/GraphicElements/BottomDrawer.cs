@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class BottomDrawer : ModularPanel, IMovablePanel
 {
+    private const int movementRate = 40;
     bool isDrawerExtended = false;
     Vector2 initialPosition;
     Vector2 finalPosition;
-    List<GameObject> allChildObjects = new List<GameObject>(); //TODO check if still needed
 
     protected override void OnSkinUI()
     {
@@ -17,12 +17,6 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         initialPosition = SetInitialPosition();
 
         panelRectTransform.anchoredPosition = initialPosition;
-
-        foreach (Transform t in transform)
-        {
-            //t.gameObject.SetActive(false);
-            allChildObjects.Add(t.gameObject);
-        }
     }
 
     public void ShowOrHideDrawer()
@@ -59,7 +53,7 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         {
             while (verticalPanelPosition < finalPosition.y)
             {
-                verticalPanelPosition += 20;
+                verticalPanelPosition += movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
                 panelRectTransform.position = positionToSet;
                 yield return new WaitForEndOfFrame();
@@ -69,7 +63,7 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         {
             while (verticalPanelPosition > initialPosition.y)
             {
-                verticalPanelPosition -= 20;
+                verticalPanelPosition -= movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
                 panelRectTransform.position = positionToSet;
                 yield return new WaitForEndOfFrame();
