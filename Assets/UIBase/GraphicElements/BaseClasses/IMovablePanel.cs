@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.UIBase.GraphicElements.BaseClasses
 {
@@ -12,7 +7,11 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
         Vector2 InitialPosition { get; set; }
         Vector2 FinalPosition { get; set; }
 
+        /// <summary>
+        /// Method to be called by buttons/events
+        /// </summary>
         void ShowOrHideDrawer();
+
         void Appear();
         void Disappear();
     }

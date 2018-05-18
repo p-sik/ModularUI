@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Button Size Data")]
+[CreateAssetMenu(menuName = "Modular UI Item Data/Button Size Data")]
 public class ButtonSize : ScriptableObject
 {
     [SerializeField] private int xDimension;

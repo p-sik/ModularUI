@@ -6,7 +6,8 @@ using UnityEngine;
 public class BottomDrawer : ModularPanel, IMovablePanel
 {
     private const int movementRate = 40;
-    bool isDrawerExtended = false;
+    private bool isDrawerExtended = false;
+
     public Vector2 InitialPosition
     {
         get

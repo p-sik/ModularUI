@@ -19,13 +19,13 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
         {
             base.OnSkinUI();
 
-            RetreiveComponents();
+            RetrieveComponents();
             SetupButton();
             SetupButtonImage();
             DisableAutomaticNavigation();
         }
 
-        protected void RetreiveComponents()
+        protected void RetrieveComponents()
         {
             buttonImage = GetComponent<Image>();
             button = GetComponent<Button>();

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "Modular UI Data")]
+[CreateAssetMenu(menuName = "Modular UI Item Data/Modular UI Data")]
 public class ModularUIData : ScriptableObject {
 
     [Header("Button")]

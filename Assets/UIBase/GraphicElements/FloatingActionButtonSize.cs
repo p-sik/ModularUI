@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Floating Action Button Data")]
+[CreateAssetMenu(menuName = "Modular UI Item Data/Floating Action Button Data")]
 public class FloatingActionButtonSize : ScriptableObject {
 
     [SerializeField] private float pressedSize;

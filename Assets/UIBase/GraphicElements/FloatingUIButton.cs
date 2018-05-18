@@ -11,7 +11,7 @@ public class FloatingUIButton : InteractableGraphic
 {
     [SerializeField] FloatingActionButtonSize buttonSize;
 
-    bool isPressed = false;
+    private bool isPressed = false;
 
     protected override void OnSkinUI()
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Collapsible Element Data")]
+[CreateAssetMenu(menuName = "Modular UI Item Data/Collapsible Element Data")]
 public class CollapsibleElementData : ScriptableObject
 {
     [SerializeField]
