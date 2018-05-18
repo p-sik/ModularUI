@@ -9,7 +9,7 @@ public class ModularUI : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Uncheck if running the element in Update breaks it's functionality.")]
-    bool refreshInEditor = true;
+    protected bool refreshInEditor = true;
 
     protected virtual void OnSkinUI()
     {

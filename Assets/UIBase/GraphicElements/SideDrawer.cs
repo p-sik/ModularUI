@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BottomDrawer : ModularPanel, IMovablePanel
+public class SideDrawer : ModularPanel, IMovablePanel
 {
-    private const int movementRate = 40;
-    bool isDrawerExtended = false;
+    private const int movementRate = 20;
+    private bool isDrawerExtended = false;
     Vector2 initialPosition;
     Vector2 finalPosition;
 
@@ -36,26 +36,29 @@ public class BottomDrawer : ModularPanel, IMovablePanel
 
     public void Appear()
     {
-        StartCoroutine(MoveBottomDrawer(true));
+        StartCoroutine(DisplayDrawer(true));
     }
 
     public void Disappear()
     {
-        StartCoroutine(MoveBottomDrawer(false));
+        StartCoroutine(DisplayDrawer(false));
     }
 
-    //IMPROVE move to base class and make it empty?
-    private IEnumerator MoveBottomDrawer(bool shouldAppear)
+    public Vector2 SetFinalPosition()
+    {
+        return Vector2.zero;
+    }
+
+    private IEnumerator DisplayDrawer(bool shouldAppear)
     {
         float verticalPanelPosition = panelRectTransform.position.y;
         float horizontalPanelPosition = panelRectTransform.position.x;
 
-        //IMPROVE refactor to not repeat itself
         if (shouldAppear)
         {
-            while (verticalPanelPosition < finalPosition.y)
+            while (horizontalPanelPosition < finalPosition.x)
             {
-                verticalPanelPosition += movementRate;
+                horizontalPanelPosition += movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
                 panelRectTransform.position = positionToSet;
                 yield return new WaitForEndOfFrame();
@@ -63,9 +66,9 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         }
         else
         {
-            while (verticalPanelPosition > initialPosition.y)
+            while (horizontalPanelPosition > initialPosition.x)
             {
-                verticalPanelPosition -= movementRate;
+                horizontalPanelPosition -= movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
                 panelRectTransform.position = positionToSet;
                 yield return new WaitForEndOfFrame();
@@ -75,15 +78,10 @@ public class BottomDrawer : ModularPanel, IMovablePanel
 
     public Vector2 SetInitialPosition()
     {
-        float initialPosY = -panelDimensions.YDimension;
+        float initialPosX = -panelDimensions.XDimension;
         Vector2 initPositionVector = Vector2.zero;
-        initPositionVector.y = initialPosY;
+        initPositionVector.x = initialPosX;
 
-        return initPositionVector;        
-    }
-
-    public Vector2 SetFinalPosition()
-    {
-        return Vector2.zero;
+        return initPositionVector;
     }
 }

@@ -34,4 +34,5 @@ MonoBehaviour:
   MainElementWithShadow: {fileID: 21300000, guid: dd41d47190121da41b8c4214fa6f0363,
     type: 3}
   PanelBackground: {fileID: 21300000, guid: 33bcebdc4bde37441b3eba56120d41a6, type: 3}
-  ContrastPanelBackground: {fileID: 0}
+  ContrastPanelBackground: {fileID: 21300000, guid: 0fe694e1b057ca14fae94aefeeeadeb6,
+    type: 3}

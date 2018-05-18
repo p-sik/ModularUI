@@ -12,6 +12,7 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
         Vector2 SetInitialPosition();
         Vector2 SetFinalPosition();
 
+        void ShowOrHideDrawer();
         void Appear();
         void Disappear();
     }
