@@ -89,7 +89,8 @@ public class CollapsingItems : MonoBehaviour
                 currentScale += collapsibleElementData.ScalingFactor;
                 currentScale = currentScale > desiredScale ? desiredScale : currentScale;
                 rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentScale);
-                yield return new WaitForFixedUpdate();
+
+                yield return new WaitForEndOfFrame();
             }
         }
         else
@@ -99,7 +100,8 @@ public class CollapsingItems : MonoBehaviour
                 currentScale -= collapsibleElementData.ScalingFactor;
                 currentScale = currentScale < desiredScale ? desiredScale : currentScale;
                 rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentScale);
-                yield return new WaitForFixedUpdate();
+
+                yield return new WaitForEndOfFrame();
             }
         }
     }
