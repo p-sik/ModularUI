@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8adb32ca7285524a8749745a7b3d298, type: 3}
   m_Name: PopUpPanel
   m_EditorClassIdentifier: 
-  xDimension: 0
-  yDimension: 0
+  xDimension: 360
+  yDimension: 240
