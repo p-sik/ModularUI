@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class PopUpPanel : ModularPanel, IMovablePanel
 {
+    //IMPROVE make the settings prettier (use ScriptableObj?)
+    [SerializeField] bool useObjectForPosition;
     [SerializeField] Transform objectToHideBehind;
-    [SerializeField] Vector2 fallBackPosition;
+    [SerializeField] Vector2 fallbackPosition;
     bool isExtended = false;
 
     public Vector2 InitialPosition
@@ -14,14 +16,21 @@ public class PopUpPanel : ModularPanel, IMovablePanel
         get
         {
             Vector2 positionToReturn;
-            try
+            if (useObjectForPosition)
             {
-                positionToReturn = objectToHideBehind.position;
+                try
+                {
+                    positionToReturn = objectToHideBehind.localPosition;
+                }
+                catch (UnassignedReferenceException e)
+                {
+                    Debug.LogWarning($"No Transform wasm added to Object To Hide Behind: " + e.Message);
+                    positionToReturn = fallbackPosition;
+                }
             }
-            catch (UnassignedReferenceException e)
+            else
             {
-                Debug.LogWarning(e.Message);
-                positionToReturn = fallBackPosition;
+                positionToReturn = fallbackPosition;
             }
             return positionToReturn;
         }
@@ -78,6 +87,7 @@ public class PopUpPanel : ModularPanel, IMovablePanel
         float currentXDimension = panelRectTransform.rect.width;
         float currentYDimension = panelRectTransform.rect.height;
         bool isXLarger = panelDimensions.XDimension > panelDimensions.YDimension;
+        const int changeRate = 40;
 
         if (isExtending)
         {
@@ -87,10 +97,10 @@ public class PopUpPanel : ModularPanel, IMovablePanel
                 {
                     if (currentYDimension < panelDimensions.YDimension)
                     {
-                        currentYDimension += 20;
+                        currentYDimension += changeRate;
                     }
 
-                    currentXDimension += 20;
+                    currentXDimension += changeRate;
 
                     SetPanelSize(currentXDimension, currentYDimension);
 
@@ -103,10 +113,10 @@ public class PopUpPanel : ModularPanel, IMovablePanel
                 {
                     if (currentXDimension < panelDimensions.XDimension)
                     {
-                        currentXDimension += 20;
+                        currentXDimension += changeRate;
                     }
 
-                    currentYDimension += 20;
+                    currentYDimension += changeRate;
 
                     SetPanelSize(currentXDimension, currentYDimension);
 
@@ -120,12 +130,12 @@ public class PopUpPanel : ModularPanel, IMovablePanel
             {
                 while (currentXDimension > 0)
                 {
-                    if (currentYDimension > 0)
+                    if (currentYDimension > 0 && currentYDimension >= currentXDimension)
                     {
-                        currentYDimension -= 20;
+                        currentYDimension -= changeRate;
                     }
 
-                    currentXDimension -= 20;
+                    currentXDimension -= changeRate;
 
                     SetPanelSize(currentXDimension, currentYDimension);
 
@@ -136,12 +146,12 @@ public class PopUpPanel : ModularPanel, IMovablePanel
             {
                 while (currentYDimension > 0)
                 {
-                    if (currentXDimension > 0)
+                    if (currentXDimension > 0 && currentXDimension >= currentYDimension)
                     {
-                        currentXDimension -= 20;
+                        currentXDimension -= changeRate;
                     }
 
-                    currentYDimension -= 20;
+                    currentYDimension -= changeRate;
 
                     SetPanelSize(currentXDimension, currentYDimension);
 
