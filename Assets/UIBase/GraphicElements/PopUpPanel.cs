@@ -24,7 +24,7 @@ public class PopUpPanel : ModularPanel, IMovablePanel
                 }
                 catch (UnassignedReferenceException e)
                 {
-                    Debug.LogWarning($"No Transform wasm added to Object To Hide Behind: " + e.Message);
+                    Debug.LogWarning($"No Transform was added to Object To Hide Behind: " + e.Message);
                     positionToReturn = fallbackPosition;
                 }
             }
@@ -81,82 +81,59 @@ public class PopUpPanel : ModularPanel, IMovablePanel
         }
     }
 
-    //IMPROVE make it not suck so much, refactor completely
     private IEnumerator IncreaseSizeGradually(bool isExtending)
     {
         float currentXDimension = panelRectTransform.rect.width;
         float currentYDimension = panelRectTransform.rect.height;
-        bool isXLarger = panelDimensions.XDimension > panelDimensions.YDimension;
+        int desiredYDimension = panelDimensions.YDimension;
+        int desiredXDimension = panelDimensions.XDimension;
+        bool isXLarger = desiredXDimension > desiredYDimension;
         const int changeRate = 40;
 
-        if (isExtending)
+        if (isExtending && isXLarger)
         {
-            if (isXLarger)
+            while (currentXDimension < desiredXDimension)
             {
-                while (currentXDimension < panelDimensions.XDimension)
-                {
-                    if (currentYDimension < panelDimensions.YDimension)
-                    {
-                        currentYDimension += changeRate;
-                    }
+                currentYDimension = currentYDimension < desiredYDimension ? currentYDimension + changeRate : currentYDimension;
+                currentXDimension += changeRate;
+                SetPanelSize(currentXDimension, currentYDimension);
 
-                    currentXDimension += changeRate;
-
-                    SetPanelSize(currentXDimension, currentYDimension);
-
-                    yield return new WaitForEndOfFrame();
-                }
-            }
-            else
-            {
-                while (currentYDimension < panelDimensions.YDimension)
-                {
-                    if (currentXDimension < panelDimensions.XDimension)
-                    {
-                        currentXDimension += changeRate;
-                    }
-
-                    currentYDimension += changeRate;
-
-                    SetPanelSize(currentXDimension, currentYDimension);
-
-                    yield return new WaitForEndOfFrame();
-                }
+                yield return new WaitForEndOfFrame();
             }
         }
-        else
+        else if (isExtending && !isXLarger)
         {
-            if (isXLarger)
+            while (currentYDimension < desiredYDimension)
             {
-                while (currentXDimension > 0)
-                {
-                    if (currentYDimension > 0 && currentYDimension >= currentXDimension)
-                    {
-                        currentYDimension -= changeRate;
-                    }
+                currentXDimension = currentXDimension < desiredXDimension ? currentXDimension + changeRate : currentXDimension;
+                currentYDimension += changeRate;
+                SetPanelSize(currentXDimension, currentYDimension);
 
-                    currentXDimension -= changeRate;
-
-                    SetPanelSize(currentXDimension, currentYDimension);
-
-                    yield return new WaitForEndOfFrame();
-                }
+                yield return new WaitForEndOfFrame();
             }
-            else
+        }
+        else if (!isExtending && isXLarger)
+        {
+            while (currentXDimension > 0)
             {
-                while (currentYDimension > 0)
-                {
-                    if (currentXDimension > 0 && currentXDimension >= currentYDimension)
-                    {
-                        currentXDimension -= changeRate;
-                    }
+                bool doesYNeedChanging = currentYDimension > 0 && currentYDimension >= currentXDimension;
+                currentYDimension = doesYNeedChanging ? currentYDimension - changeRate : currentYDimension;
+                currentXDimension -= changeRate;
+                SetPanelSize(currentXDimension, currentYDimension);
 
-                    currentYDimension -= changeRate;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else if (!isExtending && !isXLarger)
+        {
+            while (currentYDimension > 0)
+            {
+                bool doesXNeedChanging = currentXDimension > 0 && currentXDimension >= currentYDimension;
+                currentXDimension = doesXNeedChanging ? currentXDimension - changeRate : currentXDimension;
+                currentYDimension -= changeRate;
+                SetPanelSize(currentXDimension, currentYDimension);
 
-                    SetPanelSize(currentXDimension, currentYDimension);
-
-                    yield return new WaitForEndOfFrame();
-                }
+                yield return new WaitForEndOfFrame();
             }
         }
     }

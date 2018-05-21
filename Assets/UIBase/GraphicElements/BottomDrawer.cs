@@ -62,7 +62,6 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         StartCoroutine(MoveBottomDrawer(false));
     }
 
-    //IMPROVE move to base class and make it empty?
     private IEnumerator MoveBottomDrawer(bool shouldAppear)
     {
         float verticalPanelPosition = panelRectTransform.position.y;
