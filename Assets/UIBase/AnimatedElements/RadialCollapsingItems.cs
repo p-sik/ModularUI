@@ -1,6 +1,7 @@
 ﻿using Assets.UIBase.GraphicElements.BaseClasses;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RadialCollapsingItems : CollapsingMenu
@@ -60,49 +61,75 @@ public class RadialCollapsingItems : CollapsingMenu
 
     public void ShowLayoutElements()
     {
-
+        StartCoroutine(ExpandLayout());
     }
 
-    //TODO implementacija postavitve elementov
     protected IEnumerator ExpandLayout()
     {
-        bool areAllElementsFinished = false;
+        bool someElementsStillNeedChange = true;
 
-        while (!areAllElementsFinished)
+        while (someElementsStillNeedChange)
         {
+            bool[] numCompleted = new bool[numberOfElements];
+            //iterate through all elements, need to scale and move out a fraction only if needed
             for (int radialElement = 0; radialElement < numberOfElements; radialElement++)
             {
                 float desiredDistance = layoutData.DistanceFromCenter;
+                float desiredElementAngle = elementAngles[radialElement];
                 Vector2 desiredScale = elementSizes[radialElement];
                 RectTransform rt = allCollapsibles[radialElement].transform as RectTransform;
 
+                IncreaseElementSize(rt, desiredScale);
+                numCompleted[radialElement] = PositionElement(rt, desiredDistance, desiredElementAngle);
             }
-
+            if (numCompleted.All(x => x == true))
+            {
+                someElementsStillNeedChange = false;
+            }
             yield return new WaitForEndOfFrame();
         }
     }
 
-    private void IncreaseElementSize(Vector2 endSize, RectTransform elementRect)
+    private void IncreaseElementSize(RectTransform elementTransform, Vector2 endSize)
     {
-        Vector2 elementSize = elementRect.rect.size;
-        //TODO scaling obeh elementov loceno, ni nujno da so kvadratni
-        
-    }
+        Vector2 elementSize = elementTransform.rect.size;
+        bool isXEndSize = elementSize.x == endSize.x;
+        bool isYEndSize = elementSize.y == endSize.y;
+        const int changeRate = 20;
 
-    private Vector2 PositionElement(RectTransform elementTransform, float goalDistance)
-    {
-        //TODO postavljanje dimenzije
-        return Vector2.zero;
-    }
-
-    private void SetRadialLayout()
-    {
-        for (int radialElementIndex = 0; radialElementIndex < numberOfElements; radialElementIndex++)
+        if (isXEndSize && isYEndSize)
         {
-            RectTransform rt = allCollapsibles[radialElementIndex].transform as RectTransform;
-            rt.localPosition = new Vector2(Mathf.Cos(elementAngles[radialElementIndex]) * layoutData.DistanceFromCenter, Mathf.Sin(elementAngles[radialElementIndex]) * layoutData.DistanceFromCenter);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, elementSizes[radialElementIndex].x);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, elementSizes[radialElementIndex].y);
+            return;
         }
+
+        elementSize.x = !isXEndSize ? elementSize.x + changeRate : elementSize.x;
+        elementSize.y = !isYEndSize ? elementSize.y + changeRate : elementSize.y;
+
+        elementTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, elementSize.x);
+        elementTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, elementSize.y);
+    }
+
+    private bool PositionElement(RectTransform elementTransform, float goalDistance, float angle)
+    {
+        float currentX = elementTransform.localPosition.x;
+        float currentY = elementTransform.localPosition.y;
+        float goalXPosition = goalDistance * Mathf.Cos(angle);
+        float goalYPosition = goalDistance * Mathf.Sin(angle);
+        const int changeRate = 20;
+
+        bool reachedX = Mathf.Approximately(currentX, goalXPosition);
+        bool reachedY = Mathf.Approximately(currentY, goalYPosition);
+
+        if (reachedX && reachedY)
+        {
+            return true;
+        }
+
+        currentX = !reachedX ? currentX + changeRate * Mathf.Cos(angle) : currentX;
+        currentY = !reachedY ? currentY + changeRate * Mathf.Sin(angle) : currentY;
+        Vector2 newPosition = new Vector2(currentX, currentY);
+        elementTransform.localPosition = newPosition;
+
+        return false;
     }
 }
