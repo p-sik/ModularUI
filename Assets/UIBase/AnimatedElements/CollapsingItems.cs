@@ -4,10 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(VerticalLayoutGroup))]
 public class CollapsingItems : CollapsingMenu
 {
-    [SerializeField]
-    List<float> desiredScales = new List<float>();
+    [SerializeField] List<float> desiredScales = new List<float>();
+    [SerializeField] CollapsibleElementData collapsibleElementData;
+    VerticalLayoutGroup verticalLayoutComponent;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        SetupVerticalLayoutComponent();
+    }
+
+    private void SetupVerticalLayoutComponent()
+    {
+        verticalLayoutComponent = GetComponent<VerticalLayoutGroup>();
+        verticalLayoutComponent.childForceExpandHeight = true;
+        verticalLayoutComponent.childForceExpandWidth = true;
+    }
 
     public override void ActOnSelected(int index)
     {
@@ -35,7 +51,7 @@ public class CollapsingItems : CollapsingMenu
         }
     }
 
-    public override IEnumerator ScaleCollapsible(int itemIndex, float desiredScale)
+    protected override IEnumerator ScaleCollapsible(int itemIndex, float desiredScale)
     {
         RectTransform rt = allCollapsibles[itemIndex].GetComponent<RectTransform>();
         float currentScale = rt.rect.height;

@@ -9,21 +9,12 @@ using UnityEngine.UI;
 
 namespace Assets.UIBase.GraphicElements.BaseClasses
 {
-    [RequireComponent(typeof(VerticalLayoutGroup))]
     public abstract class CollapsingMenu : MonoBehaviour
     {
-        [SerializeField]
-        protected CollapsibleElementData collapsibleElementData;
         protected List<GameObject> allCollapsibles = new List<GameObject>();
         protected List<bool> areButtonsPressed = new List<bool>();
-        protected VerticalLayoutGroup verticalLayoutComponent;
 
-        public virtual void Awake()
-        {
-            SetupVerticalLayoutComponent();
-        }
-
-        public virtual void Start()
+        protected virtual void Awake()
         {
             foreach (Transform t in transform)
             {
@@ -36,11 +27,9 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
             }
         }
 
-        private void SetupVerticalLayoutComponent()
+        protected virtual void Start()
         {
-            verticalLayoutComponent = GetComponent<VerticalLayoutGroup>();
-            verticalLayoutComponent.childForceExpandHeight = true;
-            verticalLayoutComponent.childForceExpandWidth = true;
+            
         }
 
         private void IncludeCollapsibleOnly(Transform objectToCheckTransform)
@@ -52,7 +41,7 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
             }
         }
 
-        abstract public IEnumerator ScaleCollapsible(int itemIndex, float desiredScale);
+        abstract protected IEnumerator ScaleCollapsible(int itemIndex, float desiredScale);
         abstract public void ActOnSelected(int index);
     }
 }
