@@ -40,8 +40,5 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
                 areButtonsPressed.Add(false);
             }
         }
-
-        abstract protected IEnumerator ScaleCollapsible(int itemIndex, float desiredScale);
-        abstract public void ActOnSelected(int index);
     }
 }

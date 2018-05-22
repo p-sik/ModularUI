@@ -25,7 +25,7 @@ public class CollapsingItems : CollapsingMenu
         verticalLayoutComponent.childForceExpandWidth = true;
     }
 
-    public override void ActOnSelected(int index)
+    public void ActOnSelected(int index)
     {
         float expandedScale;
         float closedScale = collapsibleElementData.DefaultClosedSize;
@@ -51,7 +51,7 @@ public class CollapsingItems : CollapsingMenu
         }
     }
 
-    protected override IEnumerator ScaleCollapsible(int itemIndex, float desiredScale)
+    protected IEnumerator ScaleCollapsible(int itemIndex, float desiredScale)
     {
         RectTransform rt = allCollapsibles[itemIndex].GetComponent<RectTransform>();
         float currentScale = rt.rect.height;

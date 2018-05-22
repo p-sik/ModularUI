@@ -58,17 +58,41 @@ public class RadialCollapsingItems : CollapsingMenu
         }
     }
 
-    public override void ActOnSelected(int index)
+    public void ShowLayoutElements()
     {
-        SetRadialLayout();
+
     }
 
-    protected override IEnumerator ScaleCollapsible(int itemIndex, float desiredScale)
+    //TODO implementacija postavitve elementov
+    protected IEnumerator ExpandLayout()
     {
-        while (true)
+        bool areAllElementsFinished = false;
+
+        while (!areAllElementsFinished)
         {
+            for (int radialElement = 0; radialElement < numberOfElements; radialElement++)
+            {
+                float desiredDistance = layoutData.DistanceFromCenter;
+                Vector2 desiredScale = elementSizes[radialElement];
+                RectTransform rt = allCollapsibles[radialElement].transform as RectTransform;
+
+            }
+
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    private void IncreaseElementSize(Vector2 endSize, RectTransform elementRect)
+    {
+        Vector2 elementSize = elementRect.rect.size;
+        //TODO scaling obeh elementov loceno, ni nujno da so kvadratni
+        
+    }
+
+    private Vector2 PositionElement(RectTransform elementTransform, float goalDistance)
+    {
+        //TODO postavljanje dimenzije
+        return Vector2.zero;
     }
 
     private void SetRadialLayout()
