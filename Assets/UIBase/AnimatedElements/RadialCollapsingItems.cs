@@ -11,6 +11,8 @@ public class RadialCollapsingItems : CollapsingMenu
     private int numberOfElements;
     private float[] elementAngles;
     private Vector2[] elementSizes;
+    private bool isShowing = false;
+    private bool isRunning = false;
 
     protected override void Awake()
     {
@@ -59,43 +61,55 @@ public class RadialCollapsingItems : CollapsingMenu
         }
     }
 
-    public void ShowLayoutElements()
+    public void ShowOrHideElements()
     {
-        StartCoroutine(ExpandLayout());
+        if (!isShowing)
+        {
+            StartCoroutine(LayoutChange(false));
+            isShowing = true;
+        }
+        else
+        {
+            StartCoroutine(LayoutChange(true));
+            isShowing = false;
+        }
+
     }
 
-    protected IEnumerator ExpandLayout()
+    protected IEnumerator LayoutChange(bool isExtending)
     {
         bool someElementsStillNeedChange = true;
 
         while (someElementsStillNeedChange)
         {
             bool[] numCompleted = new bool[numberOfElements];
-            //iterate through all elements, need to scale and move out a fraction only if needed
+
             for (int radialElement = 0; radialElement < numberOfElements; radialElement++)
             {
-                float desiredDistance = layoutData.DistanceFromCenter;
+                float desiredDistance = isExtending ? layoutData.DistanceFromCenter : 0;
                 float desiredElementAngle = elementAngles[radialElement];
-                Vector2 desiredScale = elementSizes[radialElement];
+                Vector2 desiredScale = isExtending ? elementSizes[radialElement] : Vector2.zero;
                 RectTransform rt = allCollapsibles[radialElement].transform as RectTransform;
 
-                IncreaseElementSize(rt, desiredScale);
+                ChangeElementSize(rt, desiredScale);
                 numCompleted[radialElement] = PositionElement(rt, desiredDistance, desiredElementAngle);
             }
+
             if (numCompleted.All(x => x == true))
             {
                 someElementsStillNeedChange = false;
             }
+
             yield return new WaitForEndOfFrame();
         }
     }
 
-    private void IncreaseElementSize(RectTransform elementTransform, Vector2 endSize)
+    private void ChangeElementSize(RectTransform elementTransform, Vector2 endSize)
     {
         Vector2 elementSize = elementTransform.rect.size;
         bool isXEndSize = elementSize.x == endSize.x;
         bool isYEndSize = elementSize.y == endSize.y;
-        const int changeRate = 20;
+        int changeRate = endSize == Vector2.zero ? -5 : 5;
 
         if (isXEndSize && isYEndSize)
         {
@@ -115,10 +129,11 @@ public class RadialCollapsingItems : CollapsingMenu
         float currentY = elementTransform.localPosition.y;
         float goalXPosition = goalDistance * Mathf.Cos(angle);
         float goalYPosition = goalDistance * Mathf.Sin(angle);
-        const int changeRate = 20;
+        int changeRate = goalDistance == 0 ? -10 : 10;
 
-        bool reachedX = Mathf.Approximately(currentX, goalXPosition);
-        bool reachedY = Mathf.Approximately(currentY, goalYPosition);
+        float epsilon = 0.0001f;
+        bool reachedX = Mathf.Abs(currentX - goalXPosition) < epsilon;
+        bool reachedY = Mathf.Abs(currentY - goalYPosition) < epsilon;
 
         if (reachedX && reachedY)
         {
