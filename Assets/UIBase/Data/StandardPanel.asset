@@ -13,3 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xDimension: 1200
   yDimension: 1200
+  verticalOffset: 400
+  horizontalOffset: 0

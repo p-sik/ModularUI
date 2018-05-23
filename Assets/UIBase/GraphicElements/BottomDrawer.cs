@@ -12,7 +12,7 @@ public class BottomDrawer : ModularPanel, IMovablePanel
     {
         get
         {
-            float initialPosY = -panelDimensions.YDimension;
+            float initialPosY = -panelDimensions.YDimension + panelDimensions.VerticalOffset;
             Vector2 initPositionVector = Vector2.zero;
             initPositionVector.y = initialPosY;
 

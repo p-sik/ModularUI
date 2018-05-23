@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddccbdc8ffb7b284c89da3dffd0b5508, type: 3}
   m_Name: StandardRadialLayout
   m_EditorClassIdentifier: 
-  distanceFromCenter: 500
+  distanceFromCenter: 200
   startAngle: 0
-  endAngle: 90
-  angleOffset: 90
+  endAngle: 180
+  angleOffset: 0
