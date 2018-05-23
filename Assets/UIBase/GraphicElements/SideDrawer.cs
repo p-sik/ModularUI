@@ -55,11 +55,13 @@ public class SideDrawer : ModularPanel, IMovablePanel
     public void Appear()
     {
         StartCoroutine(DisplayDrawer(true));
+        isDrawerExtended = true;
     }
 
     public void Disappear()
     {
         StartCoroutine(DisplayDrawer(false));
+        isDrawerExtended = false;
     }
 
     private IEnumerator DisplayDrawer(bool shouldAppear)

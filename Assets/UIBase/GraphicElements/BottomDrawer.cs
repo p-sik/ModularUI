@@ -55,11 +55,13 @@ public class BottomDrawer : ModularPanel, IMovablePanel
     public void Appear()
     {
         StartCoroutine(MoveBottomDrawer(true));
+        isDrawerExtended = true;
     }
 
     public void Disappear()
     {
         StartCoroutine(MoveBottomDrawer(false));
+        isDrawerExtended = false;
     }
 
     private IEnumerator MoveBottomDrawer(bool shouldAppear)

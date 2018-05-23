@@ -60,11 +60,13 @@ public class PopUpPanel : ModularPanel, IMovablePanel
     public void Appear()
     {
         StartCoroutine(IncreaseSizeGradually(true));
+        isExtended = true;
     }
 
     public void Disappear()
     {
         StartCoroutine(IncreaseSizeGradually(false));
+        isExtended = false;
     }
 
     public void ShowOrHideDrawer()

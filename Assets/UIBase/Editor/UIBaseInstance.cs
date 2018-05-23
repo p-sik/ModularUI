@@ -21,6 +21,18 @@ public class UIBaseInstance : Editor {
     {
         Create("BottomDrawer");
     }
+
+    [MenuItem("GameObject/Modular UI/Side Drawer", priority = 0)]
+    public static void AddSideDrawer()
+    {
+        Create("SideDrawer");
+    }
+
+    [MenuItem("GameObject/Modular UI/Pop-up Panel", priority = 0)]
+    public static void AddPopUpDrawer()
+    {
+        Create("PopUpPanel");
+    }
     #endregion
 
     static GameObject clickedObject;

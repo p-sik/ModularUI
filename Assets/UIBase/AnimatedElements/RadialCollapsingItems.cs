@@ -1,4 +1,5 @@
 ﻿using Assets.UIBase.GraphicElements.BaseClasses;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,30 @@ public class RadialCollapsingItems : CollapsingMenu
     [SerializeField] RadialLayoutData layoutData;
 
     private int numberOfElements;
-    private float[] elementAngles;
-    private Vector2[] elementSizes;
     private bool isShowing = false;
     private bool isRunning = false;
+    private float[] elementAngles;
+    private Vector2[] elementSizes;
 
     protected override void Awake()
     {
         base.Awake();
 
+        ChangePivotsWithCurrentDimensions();
         numberOfElements = allCollapsibles.Count;
         elementAngles = SetElementAngles();
         elementSizes = GetElementSizes();
         SetInitialSizeAndPositionOfChildren();
+    }
+
+    private void ChangePivotsWithCurrentDimensions()
+    {
+        RectTransform rt = GetComponent<RectTransform>();
+        Vector2 rtSize = rt.rect.size;
+        Vector2 newPivot = rt.pivot - Vector2.one * 0.5f;
+        Vector3 posChange = new Vector2(newPivot.x * rtSize.x, newPivot.y * rtSize.x);
+        rt.pivot = Vector2.one * 0.5f;
+        rt.localPosition -= posChange;
     }
 
     private float[] SetElementAngles()
@@ -157,7 +169,7 @@ public class RadialCollapsingItems : CollapsingMenu
         float goalYPosition = goalDistance * Mathf.Sin(angle);
         int changeRate = goalDistance == 0 ? -10 : 10;
 
-        float epsilon = 0.0001f;
+        float epsilon = 0.01f;
         bool reachedX = Mathf.Abs(currentX - goalXPosition) < epsilon;
         bool reachedY = Mathf.Abs(currentY - goalYPosition) < epsilon;
 

@@ -21,7 +21,15 @@ public class RadialLayoutData : ScriptableObject
 
     public float DistanceFromCenter
     {
-        get { return distanceFromCenter; }
+        get
+        {
+            if (distanceFromCenter % 10 != 0)
+            {
+                distanceFromCenter = Mathf.Round(distanceFromCenter / 10);
+                distanceFromCenter *= 10;
+            }
+            return distanceFromCenter;
+        }
     }
     public float StartAngle
     {
