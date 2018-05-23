@@ -6,8 +6,18 @@ using UnityEngine;
 public class RadialLayoutData : ScriptableObject
 {
     [SerializeField] private float distanceFromCenter;
-    [SerializeField] private float startAngle;
-    [SerializeField] private float endAngle;
+
+    [SerializeField]
+    [Range(0, 360)]
+    private float startAngle;
+
+    [SerializeField]
+    [Range(0, 360)]
+    private float endAngle;
+
+    [SerializeField]
+    [Range(0, 360)]
+    private float angleOffset;
 
     public float DistanceFromCenter
     {
@@ -20,5 +30,9 @@ public class RadialLayoutData : ScriptableObject
     public float EndAngle
     {
         get { return endAngle; }
+    }
+    public float AngleOffset
+    {
+        get { return angleOffset; }
     }
 }

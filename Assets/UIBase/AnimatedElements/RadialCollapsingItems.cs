@@ -27,14 +27,39 @@ public class RadialCollapsingItems : CollapsingMenu
     private float[] SetElementAngles()
     {
         float[] returnedAngles = new float[numberOfElements];
-        float angleBetweenElements = 360f / numberOfElements * Mathf.Deg2Rad;
+        float totalAngle = layoutData.EndAngle - layoutData.StartAngle;
+        totalAngle = CheckAngle(totalAngle);
+        float angleOffset = layoutData.AngleOffset * Mathf.Deg2Rad;
+        float angleBetweenElements = SetAngleBetweenElements(totalAngle);
 
         for (int angleIndex = 0; angleIndex < numberOfElements; angleIndex++)
         {
             returnedAngles[angleIndex] = angleBetweenElements * angleIndex;
+            returnedAngles[angleIndex] += angleOffset;
         }
 
         return returnedAngles;
+    }
+
+    private static float CheckAngle(float totalAngle)
+    {
+        if (totalAngle <= 0)
+        {
+            Debug.Assert(totalAngle > 0, $"Provided angle range is { totalAngle }. Reverting to default value of 360°");
+            totalAngle = 360f;
+        }
+
+        return totalAngle;
+    }
+
+    private float SetAngleBetweenElements(float totalAngle)
+    {
+        float returnedTotalAngle;
+
+        int dividingFactor = totalAngle != 360 ?  (numberOfElements - 1) : numberOfElements;
+        returnedTotalAngle = totalAngle / dividingFactor * Mathf.Deg2Rad;
+
+        return returnedTotalAngle;
     }
 
     private Vector2[] GetElementSizes()
@@ -50,7 +75,6 @@ public class RadialCollapsingItems : CollapsingMenu
         return returnedSizes;
     }
 
-
     private void SetInitialSizeAndPositionOfChildren()
     {
         foreach (var collapsible in allCollapsibles)
@@ -61,29 +85,29 @@ public class RadialCollapsingItems : CollapsingMenu
         }
     }
 
-    //IMPROVE simulatenous clicks mess it up
     public void ShowOrHideElements()
     {
-        if (!isShowing)
+        if (!isRunning && !isShowing)
         {
-            StartCoroutine(LayoutChange(false));
             isShowing = true;
-        }
-        else
-        {
-            StartCoroutine(LayoutChange(true));
-            isShowing = false;
-        }
+            StartCoroutine(LayoutChange(isShowing));
 
+        }
+        else if (!isRunning && isShowing)
+        {
+            isShowing = false;
+            StartCoroutine(LayoutChange(isShowing));
+        }
     }
 
     protected IEnumerator LayoutChange(bool isExtending)
     {
         bool someElementsStillNeedChange = true;
+        isRunning = true;
 
         while (someElementsStillNeedChange)
         {
-            bool[] numCompleted = new bool[numberOfElements];
+            bool[] numCompletedLayoutChanges = new bool[numberOfElements];
 
             for (int radialElement = 0; radialElement < numberOfElements; radialElement++)
             {
@@ -93,16 +117,17 @@ public class RadialCollapsingItems : CollapsingMenu
                 RectTransform rt = allCollapsibles[radialElement].transform as RectTransform;
 
                 ChangeElementSize(rt, desiredScale);
-                numCompleted[radialElement] = PositionElement(rt, desiredDistance, desiredElementAngle);
+                numCompletedLayoutChanges[radialElement] = PositionElement(rt, desiredDistance, desiredElementAngle);
             }
 
-            if (numCompleted.All(x => x == true))
+            if (numCompletedLayoutChanges.All(x => x == true))
             {
                 someElementsStillNeedChange = false;
             }
 
             yield return new WaitForEndOfFrame();
         }
+        isRunning = false;
     }
 
     private void ChangeElementSize(RectTransform elementTransform, Vector2 endSize)
