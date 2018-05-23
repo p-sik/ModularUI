@@ -61,6 +61,7 @@ public class RadialCollapsingItems : CollapsingMenu
         }
     }
 
+    //IMPROVE simulatenous clicks mess it up
     public void ShowOrHideElements()
     {
         if (!isShowing)
