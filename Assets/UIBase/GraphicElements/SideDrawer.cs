@@ -12,9 +12,13 @@ public class SideDrawer : ModularPanel, IMovablePanel
     {
         get
         {
-            float initialPosX = -panelDimensions.XDimension;
-            Vector2 initPositionVector = Vector2.zero;
-            initPositionVector.x = initialPosX;
+            float initialPosX = -panelDimensions.XDimension + panelDimensions.HorizontalOffset;
+            float initialPosY = panelDimensions.VerticalOffset;
+            Vector2 initPositionVector = new Vector2
+            {
+                x = initialPosX,
+                y = initialPosY
+            };
 
             return initPositionVector;
         }

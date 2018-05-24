@@ -8,11 +8,8 @@ public class ButtonSize : ScriptableObject
     [SerializeField] private bool useScreenSizeX;
     [SerializeField] private bool useScreenSizeY;
 
-    [SerializeField] private int horizontalOffset;
-    [SerializeField] private int verticalOffset;
-
-    [SerializeField] private int xDimension;
-    [SerializeField] private int yDimension;
+    [SerializeField] private int xDimensionOrOffset;
+    [SerializeField] private int yDimensionOrOffset;
 
     public int XDimension
     {
@@ -20,11 +17,11 @@ public class ButtonSize : ScriptableObject
         {
             if (useScreenSizeX)
             {
-                return Screen.width - horizontalOffset * 2;
+                return Screen.width - xDimensionOrOffset * 2;
             }
             else
             {
-                return xDimension; 
+                return xDimensionOrOffset; 
             }
         }
     }
@@ -34,11 +31,11 @@ public class ButtonSize : ScriptableObject
         {
             if (useScreenSizeY)
             {
-                return Screen.height - verticalOffset * 2;
+                return Screen.height - yDimensionOrOffset * 2;
             }
             else
             {
-                return yDimension; 
+                return yDimensionOrOffset; 
             }
         }
     }

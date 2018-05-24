@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useScreenSizeX: 1
   useScreenSizeY: 0
-  xDimension: 1200
-  yDimension: 1200
+  xDimensionOrOffset: 0
+  yDimensionOrOffset: 800
   horizontalOffset: 0
   verticalOffset: 400

@@ -11,5 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8adb32ca7285524a8749745a7b3d298, type: 3}
   m_Name: SidePanel
   m_EditorClassIdentifier: 
-  xDimension: 480
-  yDimension: 1200
+  useScreenSizeX: 0
+  useScreenSizeY: 0
+  xDimensionOrOffset: 480
+  yDimensionOrOffset: 1200
+  horizontalOffset: 0
+  verticalOffset: 0

@@ -8,8 +8,8 @@ public class PanelSize : ScriptableObject
     [SerializeField] private bool useScreenSizeX;
     [SerializeField] private bool useScreenSizeY;
 
-    [SerializeField] private int xDimension;
-    [SerializeField] private int yDimension;
+    [SerializeField] private int xDimensionOrOffset;
+    [SerializeField] private int yDimensionOrOffset;
     [SerializeField] private int horizontalOffset;
     [SerializeField] private int verticalOffset;
 
@@ -19,11 +19,11 @@ public class PanelSize : ScriptableObject
         {
             if (useScreenSizeX)
             {
-                return Screen.width - horizontalOffset * 2;
+                return Screen.width - xDimensionOrOffset * 2;
             }
             else
             {
-                return xDimension;
+                return xDimensionOrOffset;
             }
 
         }
@@ -34,11 +34,11 @@ public class PanelSize : ScriptableObject
         {
             if (useScreenSizeY)
             {
-                return Screen.height - verticalOffset * 2;
+                return Screen.height - yDimensionOrOffset * 2;
             }
             else
             {
-                return yDimension; 
+                return yDimensionOrOffset; 
             }
         }
     }
