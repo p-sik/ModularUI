@@ -1,6 +1,5 @@
 # Modular UI setup project
 
 ## TO DO
-- fix all prefabs and clean up menus
-- try to export a working package
-- fix problems when screen size is different!
+- Clean up
+- fix bugs
