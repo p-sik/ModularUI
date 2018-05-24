@@ -5,18 +5,42 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Modular UI Item Data/Panel Size Data")]
 public class PanelSize : ScriptableObject
 {
+    [SerializeField] private bool useScreenSizeX;
+    [SerializeField] private bool useScreenSizeY;
+
     [SerializeField] private int xDimension;
     [SerializeField] private int yDimension;
-    [SerializeField] private int verticalOffset;
     [SerializeField] private int horizontalOffset;
+    [SerializeField] private int verticalOffset;
 
     public int XDimension
     {
-        get { return xDimension; }
+        get
+        {
+            if (useScreenSizeX)
+            {
+                return Screen.width - horizontalOffset * 2;
+            }
+            else
+            {
+                return xDimension;
+            }
+
+        }
     }
     public int YDimension
     {
-        get { return yDimension; }
+        get
+        {
+            if (useScreenSizeY)
+            {
+                return Screen.height - verticalOffset * 2;
+            }
+            else
+            {
+                return yDimension; 
+            }
+        }
     }
     public int VerticalOffset
     {

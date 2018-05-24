@@ -4,4 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/uisetup.unity
+    guid: e526b11e6ae4ae44b97b9e0f9b653129
+  m_configObjects: {}
