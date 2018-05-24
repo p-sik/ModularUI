@@ -32,7 +32,7 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
         {
             if (shadowNeeded && GetComponent<Shadow>() == null)
             {
-                gameObject.AddComponent<Shadow>();
+                gameObject.AddComponent<Shadow>();                
             }
             else if (!shadowNeeded && GetComponent<Shadow>() != null)
             {
