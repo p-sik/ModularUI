@@ -28,15 +28,16 @@ public class CollapsingItems : CollapsingMenu
     public void ActOnSelected(int index)
     {
         float expandedScale;
-        float closedScale = collapsibleElementData.DefaultClosedSize;
+        float closedSize = collapsibleElementData.DefaultClosedSize;
+        float defaultScaledSize = collapsibleElementData.DefaultScaledSize;
 
         try
         {
-            expandedScale = desiredScales[index];
+            expandedScale = desiredScales[index] != 0 ? desiredScales[index] : expandedScale = defaultScaledSize; ;
         }
         catch (System.ArgumentOutOfRangeException)
         {
-            expandedScale = collapsibleElementData.DefaultScaledSize;
+            expandedScale = defaultScaledSize;
         }
 
         if (!areButtonsPressed[index])
@@ -46,7 +47,7 @@ public class CollapsingItems : CollapsingMenu
         }
         else
         {
-            StartCoroutine(ScaleCollapsible(index, closedScale));
+            StartCoroutine(ScaleCollapsible(index, closedSize));
             areButtonsPressed[index] = false;
         }
     }
