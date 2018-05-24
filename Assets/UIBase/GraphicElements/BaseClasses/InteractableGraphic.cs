@@ -11,6 +11,8 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
     [RequireComponent(typeof(Image))]
     public class InteractableGraphic : ModularUI
     {
+        [SerializeField] protected bool hasShadow;
+
         protected Image buttonImage;
         protected Button button;
         protected RectTransform buttonRectTransform;
@@ -19,10 +21,23 @@ namespace Assets.UIBase.GraphicElements.BaseClasses
         {
             base.OnSkinUI();
 
+            ShowShadowIfNeeded(hasShadow);
             RetrieveComponents();
             SetupButton();
             SetupButtonImage();
             DisableAutomaticNavigation();
+        }
+
+        private void ShowShadowIfNeeded(bool shadowNeeded)
+        {
+            if (shadowNeeded && GetComponent<Shadow>() == null)
+            {
+                gameObject.AddComponent<Shadow>();
+            }
+            else if (!shadowNeeded && GetComponent<Shadow>() != null)
+            {
+                DestroyImmediate(GetComponent<Shadow>());
+            }
         }
 
         protected void RetrieveComponents()
