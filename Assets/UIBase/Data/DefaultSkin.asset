@@ -17,7 +17,7 @@ MonoBehaviour:
       type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 3b1825146b630f842b8dae767d7a9d6b, type: 3}
     m_DisabledSprite: {fileID: 21300000, guid: 1dccb231877e69b45a7c88b5a15bd499, type: 3}
-  AlternateSprite: {fileID: 21300000, guid: 0fe694e1b057ca14fae94aefeeeadeb6, type: 3}
+  AlternateSprite: {fileID: 21300000, guid: 33bcebdc4bde37441b3eba56120d41a6, type: 3}
   AlternateSpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 10f398739967793409294e8a235f05ba,
       type: 3}
