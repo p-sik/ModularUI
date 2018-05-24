@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8adb32ca7285524a8749745a7b3d298, type: 3}
-  m_Name: StandardPanel
+  m_Name: TopDrawer
   m_EditorClassIdentifier: 
   useScreenSizeX: 1
   useScreenSizeY: 0
   xDimensionOrOffset: 0
-  yDimensionOrOffset: 800
+  yDimensionOrOffset: 1000
   horizontalOffset: 0
   verticalOffset: 0

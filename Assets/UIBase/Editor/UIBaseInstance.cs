@@ -22,6 +22,12 @@ public class UIBaseInstance : Editor {
         Create("BottomDrawer");
     }
 
+    [MenuItem("GameObject/Modular UI/Top Drawer", priority = 0)]
+    public static void AddTopDrawer()
+    {
+        Create("TopDrawer");
+    }
+
     [MenuItem("GameObject/Modular UI/Side Drawer", priority = 0)]
     public static void AddSideDrawer()
     {

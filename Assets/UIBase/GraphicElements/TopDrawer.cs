@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BottomDrawer : ModularPanel, IMovablePanel
+public class TopDrawer : ModularPanel, IMovablePanel
 {
     private bool isDrawerExtended = false;
     int movementRate = 40;
@@ -12,7 +12,7 @@ public class BottomDrawer : ModularPanel, IMovablePanel
     {
         get
         {
-            float initialPosY = -panelDimensions.YDimension + panelDimensions.VerticalOffset;
+            float initialPosY = Screen.height + panelDimensions.VerticalOffset;
             Vector2 initPositionVector = Vector2.zero;
             initPositionVector.y = initialPosY;
 
@@ -25,19 +25,22 @@ public class BottomDrawer : ModularPanel, IMovablePanel
     {
         get
         {
-            return Vector2.zero;
+            Vector2 returnedFinalPos = new Vector2(0, Screen.height - panelDimensions.YDimension);
+            return returnedFinalPos;
         }
         set { }
     }
 
-
-    protected override void OnSkinUI()
+    public void Appear()
     {
-        base.OnSkinUI();
-        refreshInEditor = false;
+        StartCoroutine(MoveBottomDrawer(true));
+        isDrawerExtended = true;
+    }
 
-
-        panelRectTransform.anchoredPosition = InitialPosition;
+    public void Disappear()
+    {
+        StartCoroutine(MoveBottomDrawer(false));
+        isDrawerExtended = false;
     }
 
     public void ShowOrHideDrawer()
@@ -54,29 +57,17 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         }
     }
 
-    public void Appear()
-    {
-        StartCoroutine(MoveBottomDrawer(true));
-        isDrawerExtended = true;
-    }
-
-    public void Disappear()
-    {
-        StartCoroutine(MoveBottomDrawer(false));
-        isDrawerExtended = false;
-    }
-
+    //TODO create shared drawer class for top and bottom!
     private IEnumerator MoveBottomDrawer(bool shouldAppear)
     {
         float verticalPanelPosition = panelRectTransform.position.y;
         float horizontalPanelPosition = panelRectTransform.position.x;
 
-        //IMPROVE refactor to not repeat itself
         if (shouldAppear)
         {
-            while (verticalPanelPosition < FinalPosition.y)
+            while (verticalPanelPosition > FinalPosition.y)
             {
-                verticalPanelPosition += movementRate;
+                verticalPanelPosition -= movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
                 panelRectTransform.position = positionToSet;
                 yield return new WaitForEndOfFrame();
@@ -84,9 +75,9 @@ public class BottomDrawer : ModularPanel, IMovablePanel
         }
         else
         {
-            while (verticalPanelPosition > InitialPosition.y)
+            while (verticalPanelPosition < InitialPosition.y)
             {
-                verticalPanelPosition -= movementRate;
+                verticalPanelPosition += movementRate;
                 Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
                 panelRectTransform.position = positionToSet;
                 yield return new WaitForEndOfFrame();
