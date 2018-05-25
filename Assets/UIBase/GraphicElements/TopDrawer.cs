@@ -3,12 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TopDrawer : ModularPanel, IMovablePanel
+public class TopDrawer : FullWidthDrawer
 {
-    private bool isDrawerExtended = false;
-    int movementRate = 40;
+    protected override bool AppearingCondition
+    {
+        get
+        {
+            return VerticalPanelPosition > FinalPosition.y;
+        }
+    }
 
-    public Vector2 InitialPosition
+    protected override bool HidingCondition
+    {
+        get
+        {
+            return VerticalPanelPosition < InitialPosition.y;
+        }
+    }
+
+    protected override int MoveRate
+    {
+        get
+        {
+            return -40;
+        }
+    }
+
+    public override Vector2 InitialPosition
     {
         get
         {
@@ -21,7 +42,7 @@ public class TopDrawer : ModularPanel, IMovablePanel
         set { }
     }
 
-    public Vector2 FinalPosition
+    public override Vector2 FinalPosition
     {
         get
         {
@@ -29,59 +50,5 @@ public class TopDrawer : ModularPanel, IMovablePanel
             return returnedFinalPos;
         }
         set { }
-    }
-
-    public void Appear()
-    {
-        StartCoroutine(MoveBottomDrawer(true));
-        isDrawerExtended = true;
-    }
-
-    public void Disappear()
-    {
-        StartCoroutine(MoveBottomDrawer(false));
-        isDrawerExtended = false;
-    }
-
-    public void ShowOrHideDrawer()
-    {
-        if (!isDrawerExtended)
-        {
-            Appear();
-            isDrawerExtended = true;
-        }
-        else
-        {
-            Disappear();
-            isDrawerExtended = false;
-        }
-    }
-
-    //TODO create shared drawer class for top and bottom!
-    private IEnumerator MoveBottomDrawer(bool shouldAppear)
-    {
-        float verticalPanelPosition = panelRectTransform.position.y;
-        float horizontalPanelPosition = panelRectTransform.position.x;
-
-        if (shouldAppear)
-        {
-            while (verticalPanelPosition > FinalPosition.y)
-            {
-                verticalPanelPosition -= movementRate;
-                Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
-                panelRectTransform.position = positionToSet;
-                yield return new WaitForEndOfFrame();
-            }
-        }
-        else
-        {
-            while (verticalPanelPosition < InitialPosition.y)
-            {
-                verticalPanelPosition += movementRate;
-                Vector2 positionToSet = new Vector2(horizontalPanelPosition, verticalPanelPosition);
-                panelRectTransform.position = positionToSet;
-                yield return new WaitForEndOfFrame();
-            }
-        }
     }
 }
